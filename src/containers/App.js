@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux'
 import CardList from '../components/CardList';
 import SearchBox from '../components/SearchBox'
 import Scroll from '../components/Scroll'
 import ErrorBoundry from '../components/ErrorBoundry'
 import './App.css'
 
-function App() {
+import { setSearchField } from '../actions'
+
+const mapStateToProps = state => {
+    return {
+        searchField: state.searchRobots.searchField 
+    }
+}
+
+function App({store}) {
     // constructor() {
     //     super();
     //     this.state = {
@@ -34,6 +43,7 @@ function App() {
         fetch('https://jsonplaceholder.typicode.com/users')
             .then(response => response.json())
             .then(users => setRobots(users));
+        //console.log(store.getState())
     },[])
 
 
@@ -66,4 +76,4 @@ function App() {
 
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
